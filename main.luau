@@ -572,7 +572,9 @@ TextChatService.OnIncomingMessage = function(message)
 
                 if plr~=nil then
                     currentlyFlinging=true
-                    SkidFling(plr)
+                    for i=1,5 do
+                        SkidFling(plr)
+                    end
                     currentlyFlinging=false
                 end
             end
