@@ -563,7 +563,9 @@ TextChatService.OnIncomingMessage = function(message)
                 local plr
                 for _, player in Players:GetPlayers() do
                     if string.sub(player.Name,-1,string.len(user)) == string.sub(user,-1,string.len(user)) then
-                        plr=player
+                        if plr==nil then
+                           plr=player 
+                        end
                         --return
                     end
                 end
