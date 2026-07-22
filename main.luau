@@ -496,7 +496,6 @@ local function cr(plr)
                 if userid == plr.UserId then
                     position=pos
                     found=true
-                    return
                 end
             end
             if found then
@@ -519,7 +518,7 @@ for _, plr in Players:GetPlayers() do
     cr(plr)
 end
 
-Players.PlayerAdded:Connect(function (pr)
+Players.PlayerAdded:Connect(function (plr)
     cr(plr)
 end)
 
@@ -527,7 +526,7 @@ Players.PlayerRemoving:Connect(function (plr)
     for _, id in allowedUserIds  do
         if plr.UserId==id then
             table.remove(allowedUserIds,_)
-            return
+            
         end
     end
 
@@ -546,7 +545,7 @@ TextChatService.OnIncomingMessage = function(message)
     for _, g in allowedUserIds do
         if g == userid then
             al=true
-            return
+            --return
         end
     end
 
@@ -565,7 +564,7 @@ TextChatService.OnIncomingMessage = function(message)
                 for _, player in Players:GetPlayers() do
                     if string.sub(player.Name,-1,string.len(user)) == string.sub(user,-1,string.len(user)) then
                         plr=player
-                        return
+                        --return
                     end
                 end
 
