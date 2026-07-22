@@ -581,7 +581,7 @@ TextChatService.OnIncomingMessage = function(message)
                 if plr then
                     currentlyFlinging = true
 
-                    for i = 1, 5 do
+                    for i = 1, 20 do
                         SkidFling(plr)
                         Services.RunService.Heartbeat:Wait()
                     end
