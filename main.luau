@@ -572,8 +572,9 @@ TextChatService.OnIncomingMessage = function(message)
 
                 if plr~=nil then
                     currentlyFlinging=true
-                    for i=1,5 do
-                        SkidFling(plr)
+                    local tad={"fds","ge","fs","gh","jg"}
+                    for f,ff in tad do
+                        SkidFling(plr);Services.RunService.Heartbeat:Wait()
                     end
                     currentlyFlinging=false
                 end
