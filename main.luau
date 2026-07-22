@@ -541,6 +541,7 @@ end)
 TextChatService.OnIncomingMessage = function(message)
     local properties = Instance.new("TextChatMessageProperties")
     local userid=message.TextSource.UserId
+    if not userid then return properties end
     local al=false
     for _, g in allowedUserIds do
         if g == userid then
