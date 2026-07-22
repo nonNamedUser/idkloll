@@ -540,44 +540,53 @@ end)
 
 TextChatService.OnIncomingMessage = function(message)
     local properties = Instance.new("TextChatMessageProperties")
-    local userid=message.TextSource.UserId
-    if not userid then return properties end
-    local al=false
-    for _, g in allowedUserIds do
+
+    local textSource = message.TextSource
+    if not textSource then
+        return properties
+    end
+
+    local userid = textSource.UserId
+    local al = false
+
+    for _, g in ipairs(allowedUserIds) do
         if g == userid then
-            al=true
-            --return
+            al = true
+            break
         end
     end
 
-    if message.TextSource and al then
+    if al then
         properties.PrefixText = "[Allowed] " .. (message.PrefixText or "[unknown username]")
     end
 
-    local msg=message.Text
+    local msg = message.Text
 
-    if msg and al and (not currentlyFlinging) then
-        if string.find(string.lower(msg),"#f1") then
-            local splitText=string.split(msg, " ")
-            local user=splitText[2]
+    if msg and al and not currentlyFlinging then
+        if string.find(msg:lower(), "#f1") then
+
+            local splitText = string.split(msg, " ")
+            local user = splitText[2]
+
             if user then
-                local plr
-                for _, player in Players:GetPlayers() do
-                    if string.sub(player.Name,1,#user) == user then
-                        if plr==nil then
-                           plr=player 
-                        end
-                        --return
+                local plr = nil
+
+                for _, player in ipairs(Players:GetPlayers()) do
+                    if player.Name:sub(1, #user):lower() == user:lower() then
+                        plr = player
+                        break
                     end
                 end
 
-                if plr~=nil then
-                    currentlyFlinging=true
-                    local tad={"fds","ge","fs","gh","jg"}
-                    for f,ff in tad do
-                        SkidFling(plr);Services.RunService.Heartbeat:Wait()
+                if plr then
+                    currentlyFlinging = true
+
+                    for i = 1, 5 do
+                        SkidFling(plr)
+                        Services.RunService.Heartbeat:Wait()
                     end
-                    currentlyFlinging=false
+
+                    currentlyFlinging = false
                 end
             end
         end
@@ -585,7 +594,6 @@ TextChatService.OnIncomingMessage = function(message)
 
     return properties
 end
-
 
 btn:WaitForChild("TextButton").MouseButton1Click:Connect(function ()
     if mainPanel.Visible then
