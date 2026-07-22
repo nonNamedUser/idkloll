@@ -489,7 +489,7 @@ local function cr(plr)
         telab.Text=plr.DisplayName.." (@"..plr.Name..")"
         local tick=t:WaitForChild("Frame")
         local img=tick:WaitForChild("ImageLabel")
-        tick:WaitForChild("hitbox").MouseButton1Click:Connect(function ()
+        tick:WaitForChild("TextButton").MouseButton1Click:Connect(function ()
             local found=false
             local position
             for pos, userid in allowedUserIds do
@@ -509,6 +509,9 @@ local function cr(plr)
                 tick.BackgroundColor3=Color3.fromRGB(229, 73, 232)
             end
         end)
+        g.Name="Entry_"..tostring(plr.UserId)
+        g.Parent=ScrollingFrame
+        g.Visible=true
     end
 end
 
@@ -521,7 +524,18 @@ Players.PlayerAdded:Connect(function (pr)
 end)
 
 Players.PlayerRemoving:Connect(function (plr)
-    
+    for _, id in allowedUserIds  do
+        if plr.UserId==id then
+            table.remove(allowedUserIds,_)
+            return
+        end
+    end
+
+    for _, child in ScrollingFrame:GetChildren() do
+        if child.Name == "Entry_"..tostring(plr.UserId) then
+            child:Destroy()
+        end
+    end
 end)
 
 
